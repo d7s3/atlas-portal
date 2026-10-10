@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>أطلس الدول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;600&display=swap">
+<style>
+/* التخطيط: صفحة واحدة بروح المطبوعة — ترويسة بزخرفة هندسية، ونموذج الطلب في قلبها، ثم «كيف يعمل» وروابط المتابعة */
+:root{
+  --paper:#F1F4F1; --card:#FBFCFA; --ink:#1C2A28; --muted:#5D6B67; --line:#D6DDD8;
+  --sage:#6E9B8A; --sage-soft:#DCEAE3; --deep:#2E5D51; --clay:#C4623A; --clay-soft:#F4E1D6; --on-deep:#F1F7F4;
+  --display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#111816; --card:#18211F; --ink:#E6EEEA; --muted:#9AA9A4; --line:#2B3633;
+  --sage:#82B3A1; --sage-soft:#1F3530; --deep:#9DCAB8; --clay:#E28563; --clay-soft:#3A251C; --on-deep:#0F1A17; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.75;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;text-wrap:balance}
+:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+
+.band{height:46px;background:var(--deep);position:relative;overflow:hidden}
+.band svg{position:absolute;inset:0;width:100%;height:100%}
+header.hero{padding-block:34px 26px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.hero h1{font-size:clamp(34px,6vw,52px);line-height:1.05}
+.hero p{margin:10px 0 0;color:var(--muted);max-width:56ch}
+.hero .mark{width:110px;height:110px}
+@media (max-width:640px){header.hero{grid-template-columns:minmax(0,1fr)}.hero .mark{display:none}}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px}
+.kicker{font-size:12.5px;color:var(--clay);font-weight:600;margin-bottom:2px}
+.panel h2{font-size:24px;margin-bottom:14px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 22px}
+@media (max-width:700px){.cols{grid-template-columns:minmax(0,1fr)}}
+label.f{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}
+input[type=text],select,textarea{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:44px}
+textarea{min-height:84px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:var(--on-deep)}
+.chip small{opacity:.75;margin-inline-start:4px}
+.span2{grid-column:1/-1}
+.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.btn{color:var(--ink);border:1px solid var(--line);background:var(--card);border-radius:8px;padding:11px 20px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:var(--deep);border-color:var(--deep);color:var(--on-deep)}
+.btn:hover{border-color:var(--sage)}
+.hint{font-size:13px;color:var(--muted)}
+.err{color:var(--clay);font-size:14px;margin-top:10px;min-height:1.2em}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:760px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{border-top:3px solid var(--sage);padding-top:10px}
+.step b{font-family:var(--display);font-size:22px;color:var(--clay);display:block;line-height:1}
+.step h3{font-size:16px;margin:6px 0 4px}
+.step p{margin:0;font-size:14px;color:var(--muted)}
+.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+section{margin-block:22px}
+footer{padding-block:26px 40px;font-size:13px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="band" aria-hidden="true">
+  <svg preserveAspectRatio="none" viewBox="0 0 1200 46"><defs><pattern id="p" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M23 3l5.9 14.1L43 23l-14.1 5.9L23 43l-5.9-14.1L3 23l14.1-5.9z" fill="none" stroke="#6E9B8A" stroke-width="1.2" opacity=".55"/><circle cx="23" cy="23" r="2.4" fill="#C4623A" opacity=".8"/></pattern></defs><rect width="1200" height="46" fill="url(#p)"/></svg>
+</div>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <h1>أطلس الدول</h1>
+      <p>أطالس مرجعية وأدلة ميدانية للداعية وصاحب القرار، تُبنى من مصادر موثّقة باباً باباً. اطلب ما تحتاجه هنا، وتابعه حتى يصلك.</p>
+    </div>
+    <svg class="mark" viewBox="0 0 110 110" aria-hidden="true"><circle cx="55" cy="55" r="52" fill="var(--sage-soft)"/><path d="M55 10l12.5 30L97 55l-29.5 12.5L55 100 42.5 67.5 13 55l29.5-15z" fill="none" stroke="var(--deep)" stroke-width="2"/><path d="M55 24l8.4 22.6L86 55l-22.6 8.4L55 86l-8.4-22.6L24 55l22.6-8.4z" fill="var(--clay)"/><circle cx="55" cy="55" r="6" fill="var(--card)"/></svg>
+  </header>
+
+  <section class="panel" aria-labelledby="reqT">
+    <div class="kicker">طلب جديد</div>
+    <h2 id="reqT">ماذا تحتاج؟</h2>
+    <form id="f" novalidate>
+      <div class="cols">
+        <div>
+          <label class="f" for="country">الدولة</label>
+          <input type="text" id="country" list="countries" placeholder="البوسنة والهرسك" autocomplete="off">
+          <datalist id="countries"></datalist>
+        </div>
+        <div>
+          <label class="f">نوع العمل</label>
+          <div class="chips" id="kind" role="group" aria-label="نوع العمل">
+            <button type="button" class="chip" data-v="أطلس كامل" aria-pressed="true">أطلس كامل</button>
+            <button type="button" class="chip" data-v="دليل استرشادي" aria-pressed="false">دليل استرشادي</button>
+            <button type="button" class="chip" data-v="بطاقة دولة" aria-pressed="false">بطاقة دولة</button>
+            <button type="button" class="chip" data-v="باب واحد" aria-pressed="false">باب واحد</button>
+          </div>
+        </div>
+        <div id="lenBox" class="span2">
+          <label class="f">الطول</label>
+          <div class="chips" id="len" role="group" aria-label="الطول">
+            <button type="button" class="chip" data-v="مختصر" aria-pressed="false">مختصر<small>≈90 صفحة</small></button>
+            <button type="button" class="chip" data-v="متوسط" aria-pressed="true">متوسط<small>≈120 صفحة</small></button>
+            <button type="button" class="chip" data-v="مطوّل" aria-pressed="false">مطوّل<small>≈160 صفحة</small></button>
+            <button type="button" class="chip" data-v="بعد البحث" aria-pressed="false">أختار بعد البحث</button>
+          </div>
+        </div>
+        <div id="chapBox" class="span2" hidden>
+          <label class="f" for="chapter">الباب</label>
+          <select id="chapter"></select>
+        </div>
+        <div class="span2">
+          <label class="f" for="notes">ملاحظات (اختياري)</label>
+          <textarea id="notes" placeholder="ركّز على المدن الكبرى، وعلى الجهات التي يمكن التعاون معها"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="submit">أرسل الطلب</button>
+        <span class="hint">يفتح GitHub بطلبك جاهزاً، فاضغط «Create» للتأكيد.</span>
+      </div>
+      <div class="err" id="err" role="alert"></div>
+    </form>
+  </section>
+
+  <section class="panel" aria-labelledby="howT">
+    <div class="kicker">كيف يعمل</div>
+    <h2 id="howT">من الطلب إلى الملف</h2>
+    <div class="steps">
+      <div class="step"><b>1</b><h3>الطلب</h3><p>تختار الدولة ونوع العمل، فيُسجَّل طلبك في مستودعك الخاص.</p></div>
+      <div class="step"><b>2</b><h3>البحث</h3><p>يبدأ Claude فوراً: مسارات ثابتة، ثم باحثون لكل باب، ومدقّقون لكل رقم.</p></div>
+      <div class="step"><b>3</b><h3>المتابعة</h3><p>تصلك التحديثات في الطلب نفسه، وإن احتاج العمل رأيك سألك.</p></div>
+      <div class="step"><b>4</b><h3>التسليم</h3><p>الأطلس بنسختيه والدليل، PDF ووورد، جاهزة للتنزيل.</p></div>
+    </div>
+    <div class="links">
+      <a class="btn" id="mine" target="_blank" rel="noopener">طلباتي ومتابعتها</a>
+      <a class="btn" id="lib" target="_blank" rel="noopener">المكتبة: الملفات المنجزة</a>
+    </div>
+  </section>
+</div>
+<footer>أطلس الدول · يعمل بـClaude · الطلبات والملفات خاصة بصاحب المستودع</footer>
+
+<script>
+const REPO = "d7s3/atlas-claude";
+const COUNTRIES = [["أفغانستان", "Afghanistan", "af"], ["أرمينيا", "Armenia", "am"], ["أذربيجان", "Azerbaijan", "az"], ["البحرين", "Bahrain", "bh"], ["بنغلاديش", "Bangladesh", "bd"], ["بوتان", "Bhutan", "bt"], ["بروناي", "Brunei", "bn"], ["كمبوديا", "Cambodia", "kh"], ["الصين", "China", "cn"], ["قبرص", "Cyprus", "cy"], ["جورجيا", "Georgia", "ge"], ["الهند", "India", "in"], ["إندونيسيا", "Indonesia", "id"], ["إيران", "Iran", "ir"], ["العراق", "Iraq", "iq"], ["اليابان", "Japan", "jp"], ["الأردن", "Jordan", "jo"], ["كازاخستان", "Kazakhstan", "kz"], ["الكويت", "Kuwait", "kw"], ["قيرغيزستان", "Kyrgyzstan", "kg"], ["لاوس", "Laos", "la"], ["لبنان", "Lebanon", "lb"], ["ماليزيا", "Malaysia", "my"], ["المالديف", "Maldives", "mv"], ["منغوليا", "Mongolia", "mn"], ["ميانمار", "Myanmar", "mm"], ["نيبال", "Nepal", "np"], ["كوريا الشمالية", "North Korea", "kp"], ["عُمان", "Oman", "om"], ["باكستان", "Pakistan", "pk"], ["فلسطين", "Palestine", "ps"], ["الفلبين", "Philippines", "ph"], ["قطر", "Qatar", "qa"], ["السعودية", "Saudi Arabia", "sa"], ["سنغافورة", "Singapore", "sg"], ["كوريا الجنوبية", "South Korea", "kr"], ["سريلانكا", "Sri Lanka", "lk"], ["سوريا", "Syria", "sy"], ["طاجيكستان", "Tajikistan", "tj"], ["تايلاند", "Thailand", "th"], ["تيمور الشرقية", "Timor-Leste", "tl"], ["تركيا", "Turkey", "tr"], ["تركمانستان", "Turkmenistan", "tm"], ["الإمارات", "United Arab Emirates", "ae"], ["أوزبكستان", "Uzbekistan", "uz"], ["فيتنام", "Vietnam", "vn"], ["اليمن", "Yemen", "ye"], ["الجزائر", "Algeria", "dz"], ["أنغولا", "Angola", "ao"], ["بنين", "Benin", "bj"], ["بوتسوانا", "Botswana", "bw"], ["بوركينا فاسو", "Burkina Faso", "bf"], ["بوروندي", "Burundi", "bi"], ["الرأس الأخضر", "Cabo Verde", "cv"], ["الكاميرون", "Cameroon", "cm"], ["أفريقيا الوسطى", "Central African Republic", "cf"], ["تشاد", "Chad", "td"], ["جزر القمر", "Comoros", "km"], ["الكونغو", "Republic of the Congo", "cg"], ["الكونغو الديمقراطية", "DR Congo", "cd"], ["ساحل العاج", "Ivory Coast", "ci"], ["جيبوتي", "Djibouti", "dj"], ["مصر", "Egypt", "eg"], ["غينيا الاستوائية", "Equatorial Guinea", "gq"], ["إريتريا", "Eritrea", "er"], ["إسواتيني", "Eswatini", "sz"], ["إثيوبيا", "Ethiopia", "et"], ["الغابون", "Gabon", "ga"], ["غامبيا", "Gambia", "gm"], ["غانا", "Ghana", "gh"], ["غينيا", "Guinea", "gn"], ["غينيا بيساو", "Guinea-Bissau", "gw"], ["كينيا", "Kenya", "ke"], ["ليسوتو", "Lesotho", "ls"], ["ليبيريا", "Liberia", "lr"], ["ليبيا", "Libya", "ly"], ["مدغشقر", "Madagascar", "mg"], ["ملاوي", "Malawi", "mw"], ["مالي", "Mali", "ml"], ["موريتانيا", "Mauritania", "mr"], ["موريشيوس", "Mauritius", "mu"], ["المغرب", "Morocco", "ma"], ["موزمبيق", "Mozambique", "mz"], ["ناميبيا", "Namibia", "na"], ["النيجر", "Niger", "ne"], ["نيجيريا", "Nigeria", "ng"], ["رواندا", "Rwanda", "rw"], ["ساو تومي وبرينسيبي", "Sao Tome and Principe", "st"], ["السنغال", "Senegal", "sn"], ["سيشل", "Seychelles", "sc"], ["سيراليون", "Sierra Leone", "sl"], ["الصومال", "Somalia", "so"], ["جنوب أفريقيا", "South Africa", "za"], ["جنوب السودان", "South Sudan", "ss"], ["السودان", "Sudan", "sd"], ["تنزانيا", "Tanzania", "tz"], ["توغو", "Togo", "tg"], ["تونس", "Tunisia", "tn"], ["أوغندا", "Uganda", "ug"], ["زامبيا", "Zambia", "zm"], ["زيمبابوي", "Zimbabwe", "zw"], ["ألبانيا", "Albania", "al"], ["أندورا", "Andorra", "ad"], ["النمسا", "Austria", "at"], ["بيلاروسيا", "Belarus", "by"], ["بلجيكا", "Belgium", "be"], ["البوسنة والهرسك", "Bosnia and Herzegovina", "ba"], ["بلغاريا", "Bulgaria", "bg"], ["كرواتيا", "Croatia", "hr"], ["التشيك", "Czechia", "cz"], ["الدنمارك", "Denmark", "dk"], ["إستونيا", "Estonia", "ee"], ["فنلندا", "Finland", "fi"], ["فرنسا", "France", "fr"], ["ألمانيا", "Germany", "de"], ["اليونان", "Greece", "gr"], ["المجر", "Hungary", "hu"], ["آيسلندا", "Iceland", "is"], ["أيرلندا", "Ireland", "ie"], ["إيطاليا", "Italy", "it"], ["كوسوفو", "Kosovo", "xk"], ["لاتفيا", "Latvia", "lv"], ["ليختنشتاين", "Liechtenstein", "li"], ["ليتوانيا", "Lithuania", "lt"], ["لوكسمبورغ", "Luxembourg", "lu"], ["مالطا", "Malta", "mt"], ["مولدوفا", "Moldova", "md"], ["موناكو", "Monaco", "mc"], ["الجبل الأسود", "Montenegro", "me"], ["هولندا", "Netherlands", "nl"], ["مقدونيا الشمالية", "North Macedonia", "mk"], ["النرويج", "Norway", "no"], ["بولندا", "Poland", "pl"], ["البرتغال", "Portugal", "pt"], ["رومانيا", "Romania", "ro"], ["روسيا", "Russia", "ru"], ["سان مارينو", "San Marino", "sm"], ["صربيا", "Serbia", "rs"], ["سلوفاكيا", "Slovakia", "sk"], ["سلوفينيا", "Slovenia", "si"], ["إسبانيا", "Spain", "es"], ["السويد", "Sweden", "se"], ["سويسرا", "Switzerland", "ch"], ["أوكرانيا", "Ukraine", "ua"], ["المملكة المتحدة", "United Kingdom", "gb"], ["الفاتيكان", "Vatican City", "va"], ["أنتيغوا وباربودا", "Antigua and Barbuda", "ag"], ["الأرجنتين", "Argentina", "ar"], ["الباهاما", "Bahamas", "bs"], ["بربادوس", "Barbados", "bb"], ["بليز", "Belize", "bz"], ["بوليفيا", "Bolivia", "bo"], ["البرازيل", "Brazil", "br"], ["كندا", "Canada", "ca"], ["تشيلي", "Chile", "cl"], ["كولومبيا", "Colombia", "co"], ["كوستاريكا", "Costa Rica", "cr"], ["كوبا", "Cuba", "cu"], ["دومينيكا", "Dominica", "dm"], ["الجمهورية الدومينيكية", "Dominican Republic", "do"], ["الإكوادور", "Ecuador", "ec"], ["السلفادور", "El Salvador", "sv"], ["غرينادا", "Grenada", "gd"], ["غواتيمالا", "Guatemala", "gt"], ["غيانا", "Guyana", "gy"], ["هايتي", "Haiti", "ht"], ["هندوراس", "Honduras", "hn"], ["جامايكا", "Jamaica", "jm"], ["المكسيك", "Mexico", "mx"], ["نيكاراغوا", "Nicaragua", "ni"], ["بنما", "Panama", "pa"], ["باراغواي", "Paraguay", "py"], ["بيرو", "Peru", "pe"], ["سانت كيتس ونيفيس", "Saint Kitts and Nevis", "kn"], ["سانت لوسيا", "Saint Lucia", "lc"], ["سانت فنسنت والغرينادين", "Saint Vincent and the Grenadines", "vc"], ["سورينام", "Suriname", "sr"], ["ترينيداد وتوباغو", "Trinidad and Tobago", "tt"], ["الولايات المتحدة", "United States", "us"], ["أوروغواي", "Uruguay", "uy"], ["فنزويلا", "Venezuela", "ve"], ["أستراليا", "Australia", "au"], ["فيجي", "Fiji", "fj"], ["كيريباتي", "Kiribati", "ki"], ["جزر مارشال", "Marshall Islands", "mh"], ["ميكرونيزيا", "Micronesia", "fm"], ["ناورو", "Nauru", "nr"], ["نيوزيلندا", "New Zealand", "nz"], ["بالاو", "Palau", "pw"], ["بابوا غينيا الجديدة", "Papua New Guinea", "pg"], ["ساموا", "Samoa", "ws"], ["جزر سليمان", "Solomon Islands", "sb"], ["تونغا", "Tonga", "to"], ["توفالو", "Tuvalu", "tv"], ["فانواتو", "Vanuatu", "vu"], ["تايوان", "Taiwan", "tw"], ["هونغ كونغ", "Hong Kong", "hk"], ["ماكاو", "Macau", "mo"], ["الصحراء الغربية", "Western Sahara", "eh"], ["مايوت", "Mayotte", "yt"], ["ريونيون", "Reunion", "re"], ["جزر فارو", "Faroe Islands", "fo"], ["غرينلاند", "Greenland", "gl"], ["بورتوريكو", "Puerto Rico", "pr"], ["كاليدونيا الجديدة", "New Caledonia", "nc"], ["بولينيزيا الفرنسية", "French Polynesia", "pf"], ["غوام", "Guam", "gu"], ["ساموا الأمريكية", "American Samoa", "as"], ["جزر كوك", "Cook Islands", "ck"], ["نييوي", "Niue", "nu"], ["واليس وفوتونا", "Wallis and Futuna", "wf"], ["جزر ماريانا الشمالية", "Northern Mariana Islands", "mp"]];
+const CHAPTERS = ["التعريف بالدولة","المعلومات الجغرافية","المعلومات السكانية","التعليم","المعلومات السياسية والاقتصادية","التواصل الاجتماعي","معلومات الأمن","المعلومات الدعوية","الشيعة والتشيع","النصرانية والتنصير","الدعوة والإعلام","قسم الإغاثة","المعلومات الصحية","معلومات الرحلة","أين تذهب","معلومات السفر","نصائح للمسافر"];
+const $ = s => document.querySelector(s);
+const dl = $("#countries"); for (const c of COUNTRIES) { const o=document.createElement("option"); o.value=c[0]; dl.append(o); }
+CHAPTERS.forEach((n,i)=>{ const o=document.createElement("option"); const k=String(i+1).padStart(2,"0"); o.value=k; o.textContent=k+" · "+n; $("#chapter").append(o); });
+function group(id, cb){ const g=$(id); g.addEventListener("click",e=>{ const b=e.target.closest(".chip"); if(!b) return; for(const x of g.querySelectorAll(".chip")) x.setAttribute("aria-pressed", x===b?"true":"false"); cb&&cb(b.dataset.v); }); return ()=>g.querySelector('[aria-pressed="true"]').dataset.v; }
+const kind = group("#kind", v=>{ $("#lenBox").hidden = v!=="أطلس كامل"; $("#chapBox").hidden = v!=="باب واحد"; });
+const len = group("#len");
+$("#mine").href = "https://github.com/"+REPO+"/issues?q=" + encodeURIComponent("is:issue label:طلب");
+$("#lib").href = "https://github.com/"+REPO+"/releases";
+$("#country").addEventListener("input",()=>{$("#err").textContent="";});
+$("#f").addEventListener("submit", e=>{
+  e.preventDefault();
+  const country=$("#country").value.trim(), err=$("#err"); err.textContent="";
+  if(!country){ err.textContent="اختر الدولة أولاً."; return; }
+  if(!COUNTRIES.some(c=>c[0]===country)){ err.textContent="اختر الدولة من القائمة كما تظهر."; return; }
+  const k=kind(), l = k==="أطلس كامل" ? len() : "", ch = k==="باب واحد" ? $("#chapter").value : "", notes=$("#notes").value.trim();
+  const body = "### الدولة\n\n"+country+"\n\n### نوع العمل\n\n"+k+"\n\n### الطول (للأطلس)\n\n"+(l||"_No response_")+
+               "\n\n### الباب (لطلب باب واحد)\n\n"+(ch||"_No response_")+"\n\n### ملاحظات\n\n"+(notes||"_No response_")+"\n";
+  const title = "طلب: "+k+" — "+country+(ch?" — الباب "+ch:"");
+  const url = "https://github.com/"+REPO+"/issues/new?"+new URLSearchParams({title, body, labels:"طلب"}).toString();
+  window.open(url, "_blank", "noopener");
+});
+</script>
+</body>
+</html>
