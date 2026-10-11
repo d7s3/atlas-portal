@@ -65,6 +65,33 @@ textarea{min-height:84px;resize:vertical}
 .step p{margin:0;font-size:14px;color:var(--muted)}
 .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
 section{margin-block:22px}
+
+/* لوحة التقدّم */
+.lock{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.lock input{flex:1 1 220px;max-width:340px}
+.req{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.req:first-child{border-top:0;padding-top:0;margin-top:0}
+.reqhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.reqhead h3{font-size:20px}
+.st{font-size:12.5px;padding:3px 11px;border-radius:999px;background:var(--clay-soft);color:var(--clay);white-space:nowrap}
+.st.done{background:var(--sage-soft);color:var(--deep)} .st.wait{background:#F6E8CF;color:#9A5B14}
+.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:12px 0 4px}
+.stages i{height:6px;border-radius:3px;background:var(--line)} .stages i.on{background:var(--sage)} .stages i.now{background:var(--clay)}
+.slbl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;font-size:11.5px;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin-top:12px}
+.tile{border-radius:8px;padding:6px 3px;text-align:center;font-size:11.5px;line-height:1.35;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.tile b{display:block;font-family:var(--display);font-size:15px}
+.tile.research,.tile.patch{background:#EFE7D3;color:#9A5B14;border-color:transparent}
+.tile.writing{background:var(--clay-soft);color:var(--clay);border-color:transparent}
+.tile.verify{background:var(--sage-soft);color:var(--deep);border-color:transparent}
+.tile.approved{background:var(--deep);color:var(--on-deep);border-color:transparent}
+.log{list-style:none;margin:12px 0 0;padding:0;font-size:14px}
+.log li{display:flex;gap:10px;padding:5px 0;border-bottom:1px dotted var(--line)}
+.log li:last-child{border-bottom:0}
+.log time{color:var(--muted);flex:none;font-size:12.5px;font-variant-numeric:tabular-nums}
+.meta{font-size:13px;color:var(--muted);margin-top:4px}
+.empty{color:var(--muted);font-size:14px;padding:14px;border:1px dashed var(--line);border-radius:10px;text-align:center}
+@media (prefers-color-scheme: dark){.tile.research,.tile.patch{background:#2E2A20;color:#E3B061}.st.wait{background:#33281A;color:#E3B061}}
 footer{padding-block:26px 40px;font-size:13px;color:var(--muted);text-align:center}
 </style>
 </head>
@@ -80,6 +107,24 @@ footer{padding-block:26px 40px;font-size:13px;color:var(--muted);text-align:cent
     </div>
     <svg class="mark" viewBox="0 0 110 110" aria-hidden="true"><circle cx="55" cy="55" r="52" fill="var(--sage-soft)"/><path d="M55 10l12.5 30L97 55l-29.5 12.5L55 100 42.5 67.5 13 55l29.5-15z" fill="none" stroke="var(--deep)" stroke-width="2"/><path d="M55 24l8.4 22.6L86 55l-22.6 8.4L55 86l-8.4-22.6L24 55l22.6-8.4z" fill="var(--clay)"/><circle cx="55" cy="55" r="6" fill="var(--card)"/></svg>
   </header>
+
+
+  <section class="panel" aria-labelledby="dashT" id="dash">
+    <div class="kicker">العمل الجاري</div>
+    <h2 id="dashT">لوحة التقدّم</h2>
+    <div id="dashLock">
+      <p class="hint" style="margin:0 0 10px">اللوحة مشفّرة. اكتب كلمة السر مرة واحدة على هذا الجهاز.</p>
+      <form class="lock" id="lockForm">
+        <input type="password" id="pass" placeholder="كلمة السر" autocomplete="current-password" aria-label="كلمة السر">
+        <button class="btn primary" type="submit">افتح اللوحة</button>
+      </form>
+      <div class="err" id="lockErr" role="alert"></div>
+    </div>
+    <div id="dashBody" hidden>
+      <div id="reqs"></div>
+      <div class="actions"><span class="hint" id="stamp"></span><button class="btn" type="button" id="refresh">تحديث</button><button class="btn" type="button" id="forget">انسَ كلمة السر</button></div>
+    </div>
+  </section>
 
   <section class="panel" aria-labelledby="reqT">
     <div class="kicker">طلب جديد</div>
@@ -136,7 +181,8 @@ footer{padding-block:26px 40px;font-size:13px;color:var(--muted);text-align:cent
       <div class="step"><b>4</b><h3>التسليم</h3><p>الأطلس بنسختيه والدليل، PDF ووورد، جاهزة للتنزيل.</p></div>
     </div>
     <div class="links">
-      <a class="btn" id="mine" target="_blank" rel="noopener">طلباتي ومتابعتها</a>
+      <a class="btn" href="#dash">لوحة التقدّم</a>
+      <a class="btn" id="mine" target="_blank" rel="noopener">الطلبات في GitHub</a>
       <a class="btn" id="lib" target="_blank" rel="noopener">المكتبة: الملفات المنجزة</a>
     </div>
   </section>
@@ -168,6 +214,69 @@ $("#f").addEventListener("submit", e=>{
   const url = "https://github.com/"+REPO+"/issues/new?"+new URLSearchParams({title, body, labels:"طلب"}).toString();
   window.open(url, "_blank", "noopener");
 });
+
+// لوحة التقدّم: status.json مشفّر بـAES-GCM ومفتاحٍ من كلمة السر (PBKDF2)، ويُفكّ في المتصفح وحده
+const STAGES=[["setup","الإعداد"],["research","البحث"],["write","الكتابة والتدقيق"],["design","الإخراج"],["deliver","التسليم"]];
+const STAGE_IDX={setup:0,research:1,length:1,write:2,assemble:3,design:3,guide:3,deliver:4};
+const CH=["التعريف","الجغرافيا","السكان","التعليم","السياسة والاقتصاد","التواصل","الأمن","الدعوة","الشيعة","النصرانية","الإعلام","الإغاثة","الصحة","الرحلة","أين تذهب","السفر","نصائح"];
+const TILE={research:"بحث",patch:"ترقيع",writing:"كتابة",verify:"تدقيق",approved:"معتمد"};
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const store={get(){try{return localStorage.getItem("atlasPass")}catch{return null}},set(v){try{localStorage.setItem("atlasPass",v)}catch{}},del(){try{localStorage.removeItem("atlasPass")}catch{}}};
+async function decrypt(enc, pass){
+  const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pass),"PBKDF2",false,["deriveKey"]);
+  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(enc.salt),iterations:enc.iter||250000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(enc.iv)},key,b64(enc.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+const fmt=v=>{try{return new Date(v).toLocaleString("ar-SA-u-nu-latn",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}catch{return ""}};
+const mk=(t,c,txt)=>{const e=document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e;};
+function render(data){
+  const box=$("#reqs"); box.replaceChildren();
+  const list=data.requests||[];
+  if(!list.length){ box.append(mk("div","empty","لا طلبات بعد. أرسل طلباً من «ماذا تحتاج؟» وسيظهر هنا.")); }
+  for(const r of list){
+    const card=mk("article","req");
+    const head=mk("div","reqhead");
+    head.append(mk("h3",null,r.country+" · "+r.kind+(r.chapter?" "+r.chapter:"")), mk("span","st"+(r.done?" done":r.waiting?" wait":""), r.done?"منجز":r.waiting?"بانتظار ردّك":"قيد العمل"));
+    card.append(head);
+    const meta=[]; if(r.length) meta.push("الطول: "+r.length); if(r.updated) meta.push("آخر تحديث "+fmt(r.updated)); if(r.issue) meta.push("طلب رقم "+r.issue);
+    card.append(mk("div","meta",meta.join(" · ")));
+    const si=r.done?5:(STAGE_IDX[r.stage]??0);
+    const bars=mk("div","stages"), lbl=mk("div","slbl");
+    STAGES.forEach(([k,n],i)=>{ bars.append(mk("i",i<si?"on":i===si?"now":"")); lbl.append(mk("span",null,n)); });
+    card.append(bars,lbl);
+    if(r.waiting && r.question){ const q=mk("p","hint",r.question); q.style.margin="10px 0 0"; card.append(q); }
+    if(r.chapters && Object.keys(r.chapters).length || (r.kind||"").includes("أطلس")){
+      const tiles=mk("div","tiles"); const ch=r.chapters||{};
+      CH.forEach((n,i)=>{ const k=String(i+1).padStart(2,"0"); const st=ch[k]||""; const t=mk("div","tile "+st); t.title=n+(st?" — "+TILE[st]:""); t.append(mk("b",null,k), n); tiles.append(t); });
+      card.append(tiles);
+      const ap=Object.values(ch).filter(v=>v==="approved").length; card.append(mk("div","meta",ap+" من 17 باباً معتمدة"));
+    }
+    const log=(r.log||[]).slice(-6).reverse();
+    if(log.length){ const ul=mk("ul","log"); for(const l of log){ const li=mk("li"); li.append(mk("time",null,fmt(l.t)), mk("span",null,l.msg)); ul.append(li);} card.append(ul); }
+    if(r.release){ const a=mk("a","btn primary","تنزيل الملفات"); a.href=r.release; a.target="_blank"; a.rel="noopener"; const w=mk("div","actions"); w.append(a, mk("span","hint","تُفتح في GitHub بحسابك")); card.append(w); }
+    box.append(card);
+  }
+  $("#stamp").textContent="آخر نشر للحالة: "+fmt(data.generated);
+}
+let pass=null, timer=null;
+async function load(silent){
+  try{
+    const r=await fetch("status.json?t="+Date.now(),{cache:"no-store"});
+    if(!r.ok){ if(!silent){ $("#dashLock").hidden=true; $("#dashBody").hidden=false; render({requests:[]}); $("#stamp").textContent="لم تُنشر حالة بعد."; } return true; }
+    const data=await decrypt(await r.json(), pass);
+    $("#dashLock").hidden=true; $("#dashBody").hidden=false; render(data); return true;
+  }catch(e){ return false; }
+}
+async function unlock(p){
+  pass=p; const ok=await load(false);
+  if(!ok){ pass=null; store.del(); $("#lockErr").textContent="كلمة السر غير صحيحة."; $("#dashLock").hidden=false; $("#dashBody").hidden=true; return; }
+  store.set(p); clearInterval(timer); timer=setInterval(()=>load(true),60000);
+}
+$("#lockForm").addEventListener("submit",e=>{ e.preventDefault(); $("#lockErr").textContent=""; const p=$("#pass").value; if(!p){ $("#lockErr").textContent="اكتب كلمة السر أولاً."; return; } unlock(p); });
+$("#refresh").addEventListener("click",()=>load(true));
+$("#forget").addEventListener("click",()=>{ store.del(); pass=null; clearInterval(timer); $("#dashBody").hidden=true; $("#dashLock").hidden=false; $("#pass").value=""; });
+{ const saved=store.get(); if(saved) unlock(saved); }
 </script>
 </body>
 </html>
