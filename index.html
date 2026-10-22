@@ -48,6 +48,7 @@ textarea{min-height:84px;resize:vertical}
 .chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:var(--on-deep)}
 .chip small{opacity:.75;margin-inline-start:4px}
+p.note{font-size:13px;opacity:.75;margin:8px 0 0}
 .span2{grid-column:1/-1}
 .actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
 .btn{color:var(--ink);border:1px solid var(--line);background:var(--card);border-radius:8px;padding:11px 20px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
@@ -148,10 +149,30 @@ footer{padding-block:26px 40px;font-size:13px;color:var(--muted);text-align:cent
         <div id="lenBox" class="span2">
           <label class="f">الطول</label>
           <div class="chips" id="len" role="group" aria-label="الطول">
-            <button type="button" class="chip" data-v="مختصر" aria-pressed="false">مختصر<small>≈90 صفحة</small></button>
-            <button type="button" class="chip" data-v="متوسط" aria-pressed="true">متوسط<small>≈120 صفحة</small></button>
-            <button type="button" class="chip" data-v="مطوّل" aria-pressed="false">مطوّل<small>≈160 صفحة</small></button>
+            <button type="button" class="chip" data-v="مختصر" aria-pressed="false">مختصر<small>الأساس والأرقام</small></button>
+            <button type="button" class="chip" data-v="متوسط" aria-pressed="true">متوسط<small>الموصى به</small></button>
+            <button type="button" class="chip" data-v="مطوّل" aria-pressed="false">مطوّل<small>أكثر التفاصيل</small></button>
             <button type="button" class="chip" data-v="بعد البحث" aria-pressed="false">أختار بعد البحث</button>
+          </div>
+          <p class="note">الطول نسبيٌّ إلى حجم الدولة: «المختصر» لدولةٍ صغيرة نحو 70 صفحة، ولدولةٍ كبيرة كأمريكا نحو 120. وتصلك الأرقام الدقيقة بعد البحث.</p>
+        </div>
+        <div id="styleBox" class="span2">
+          <label class="f">أسلوب الدليل</label>
+          <div class="chips" id="style" role="group" aria-label="أسلوب الدليل">
+            <button type="button" class="chip" data-v="أكاديمي" aria-pressed="true">أكاديمي<small>منظّم بنوداً وجداول</small></button>
+            <button type="button" class="chip" data-v="أدبي" aria-pressed="false">أدبي<small>نثرٌ متصل كرحّالةٍ خبير</small></button>
+          </div>
+        </div>
+        <div id="designBox" class="span2">
+          <label class="f">التصميم</label>
+          <div class="chips" id="tpl" role="group" aria-label="القالب">
+            <button type="button" class="chip" data-v="رسمي" aria-pressed="true">رسمي</button>
+            <button type="button" class="chip" data-v="تحريري" aria-pressed="false">تحريري<small>بروح المجلات</small></button>
+            <button type="button" class="chip" data-v="ميداني" aria-pressed="false">ميداني<small>الصور أولاً</small></button>
+          </div>
+          <div class="chips" id="colors" role="group" aria-label="الألوان" style="margin-top:8px">
+            <button type="button" class="chip" data-v="ألوان الدولة" aria-pressed="true">ألوان الدولة<small>تلقائي من علمها</small></button>
+            <button type="button" class="chip" data-v="ألوان ثابتة" aria-pressed="false">ألوان الأطلس الثابتة</button>
           </div>
         </div>
         <div id="chapBox" class="span2" hidden>
@@ -197,8 +218,9 @@ const $ = s => document.querySelector(s);
 const dl = $("#countries"); for (const c of COUNTRIES) { const o=document.createElement("option"); o.value=c[0]; dl.append(o); }
 CHAPTERS.forEach((n,i)=>{ const o=document.createElement("option"); const k=String(i+1).padStart(2,"0"); o.value=k; o.textContent=k+" · "+n; $("#chapter").append(o); });
 function group(id, cb){ const g=$(id); g.addEventListener("click",e=>{ const b=e.target.closest(".chip"); if(!b) return; for(const x of g.querySelectorAll(".chip")) x.setAttribute("aria-pressed", x===b?"true":"false"); cb&&cb(b.dataset.v); }); return ()=>g.querySelector('[aria-pressed="true"]').dataset.v; }
-const kind = group("#kind", v=>{ $("#lenBox").hidden = v!=="أطلس كامل"; $("#chapBox").hidden = v!=="باب واحد"; });
-const len = group("#len");
+const kind = group("#kind", v=>{ $("#lenBox").hidden = v!=="أطلس كامل"; $("#chapBox").hidden = v!=="باب واحد";
+  $("#styleBox").hidden = !(v==="أطلس كامل" || v==="دليل استرشادي"); });
+const len = group("#len"), style = group("#style"), tpl = group("#tpl"), colors = group("#colors");
 $("#mine").href = "https://github.com/"+REPO+"/issues?q=" + encodeURIComponent("is:issue label:طلب");
 $("#lib").href = "https://github.com/"+REPO+"/releases";
 $("#country").addEventListener("input",()=>{$("#err").textContent="";});
@@ -208,8 +230,12 @@ $("#f").addEventListener("submit", e=>{
   if(!country){ err.textContent="اختر الدولة أولاً."; return; }
   if(!COUNTRIES.some(c=>c[0]===country)){ err.textContent="اختر الدولة من القائمة كما تظهر."; return; }
   const k=kind(), l = k==="أطلس كامل" ? len() : "", ch = k==="باب واحد" ? $("#chapter").value : "", notes=$("#notes").value.trim();
+  const st = $("#styleBox").hidden ? "" : style();
   const body = "### الدولة\n\n"+country+"\n\n### نوع العمل\n\n"+k+"\n\n### الطول (للأطلس)\n\n"+(l||"_No response_")+
-               "\n\n### الباب (لطلب باب واحد)\n\n"+(ch||"_No response_")+"\n\n### ملاحظات\n\n"+(notes||"_No response_")+"\n";
+               "\n\n### الباب (لطلب باب واحد)\n\n"+(ch||"_No response_")+
+               "\n\n### أسلوب الدليل\n\n"+(st||"_No response_")+
+               "\n\n### القالب\n\n"+tpl()+"\n\n### الألوان\n\n"+colors()+
+               "\n\n### ملاحظات\n\n"+(notes||"_No response_")+"\n";
   const title = "طلب: "+k+" — "+country+(ch?" — الباب "+ch:"");
   const url = "https://github.com/"+REPO+"/issues/new?"+new URLSearchParams({title, body, labels:"طلب"}).toString();
   window.open(url, "_blank", "noopener");
