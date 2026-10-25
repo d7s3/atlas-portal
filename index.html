@@ -340,6 +340,12 @@ footer::before{content:"";position:absolute;left:50%;top:-38px;transform:transla
 footer img{filter:brightness(0) invert(.96)!important;height:40px}
 footer a:hover{color:#fff}
 @media (prefers-color-scheme: dark){.heroband,.top,footer,footer::before{--hero:#0D1714}.stats b{color:var(--bronze)}}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.ctl .btn{min-height:38px;padding:0 14px;font-size:14px}
+.ctl .btn.danger{color:var(--danger)}
+.ctl .btn.danger:hover{border-color:var(--danger)}
+.ctl .hint{font-size:12.5px;color:var(--muted);margin-inline-start:auto}
+.pill.paused{background:var(--paper-2);color:var(--muted)}
 </style>
 </head>
 <body>
@@ -668,7 +674,7 @@ function render(data){
   for(const r of list){
     const card=mk("article","req"), head=mk("div","reqhead");
     head.append(mk("span","fl",flag(ISO[r.country])), mk("h3",null,r.country), mk("span","kind",(r.kind||"")+(r.chapter?" · الباب "+r.chapter:"")), ...(r.issue?[mk("span","id","#"+r.issue)]:[]),
-      mk("span","pill"+(r.done?" done":r.waiting?" wait":""), r.done?"منجز":r.waiting?"بانتظار ردّك":"قيد العمل"));
+      mk("span","pill"+(r.done?" done":r.paused?" paused":r.waiting?" wait":""), r.done?"منجز":r.paused?"موقوف مؤقتاً":r.waiting?"بانتظار ردّك":"قيد العمل"));
     card.append(head);
     const meta=[]; if(r.length) meta.push("الطول: "+r.length); if(r.updated) meta.push("آخر تحديث "+fmt(r.updated)); 
     card.append(mk("div","meta",meta.join(" · ")));
@@ -688,6 +694,17 @@ function render(data){
     }
     const log=(r.log||[]).slice(-5).reverse();
     if(log.length){ const ul=mk("ul","log"); for(const l of log){ const li=mk("li"); li.append(mk("time",null,fmt(l.t)), mk("span",null,l.msg)); ul.append(li);} card.append(ul); }
+    // أوامر الطلب: تفتح تذكرة «أمر» جاهزة في GitHub، فيُنفّذها سير العمل atlas-control.yml بعد تأكيدك
+    if(!r.done && r.issue){
+      const ctl=mk("div","ctl"), cmd=(verb)=>"https://github.com/"+REPO+"/issues/new?"+new URLSearchParams({title:verb+" #"+r.issue+" — "+r.country, labels:"أمر", body:"أمرٌ من موقع الطلبات."});
+      const btn=(t,cls,verb,ask)=>{ const a=mk("a","btn "+cls,t); a.href=cmd(verb); a.target="_blank"; a.rel="noopener";
+        if(ask) a.addEventListener("click",e=>{ if(!confirm(ask)) e.preventDefault(); }); return a; };
+      if(r.paused) ctl.append(btn("استئناف","primary","استئناف"));
+      else ctl.append(btn("إيقاف مؤقت","outline","إيقاف","يتوقف التشغيل الجاري الآن، ويُحفظ ما أُنجز. أتابع؟"));
+      ctl.append(btn("إلغاء الطلب","ghost danger","إلغاء","يُلغى الطلب نهائياً ويُغلق. ما أُنجز يبقى في المستودع. أتابع؟"),
+                 mk("span","hint","يُفتح الأمر في GitHub، فاضغط «Create» لتنفيذه."));
+      card.append(ctl);
+    }
     if(r.release){ const a=mk("a","btn primary","تنزيل الملفات"); a.href=r.release; a.target="_blank"; a.rel="noopener"; a.style.marginTop="14px"; card.append(a); }
     box.append(card);
   }
